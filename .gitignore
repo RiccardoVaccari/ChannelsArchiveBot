@@ -1,0 +1,4 @@
+development_config.py
+*.session
+__pycache__
+venv
