@@ -76,6 +76,19 @@ class Info(Text):
         "You've successfully added <b>{}</b> to our archive!"
     )
 
+    # ---- Publish Channel ----
+
+    PUBLISH_CHANNEL = (
+        # "<a href=\"{image}\">📣</a> <b>New Channel</b>\n"
+        "📣 <b>New Channel</b>\n"
+        "<b>• Name:</b> {name}\n"
+        "<b>• Link:</b> <a href=\"{link}\">Click here to join!</a>\n"
+        "<b>• Rating:</b> {stars} ({rating}/5 on {votes} votes)\n\n"
+        "<b>✏️ Description:</b> {description}\n"
+        "<b>🌎 Languages:</b> {languages}\n"
+        "<b>#️⃣ Tags:</b> {tags}"
+    )
+
 
 class Errors(Text):
 

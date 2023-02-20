@@ -1,8 +1,14 @@
 from pyrogram import Client, types
-from ChannelsArchiveBot.config import Config
+from apscheduler.schedulers.background import BackgroundScheduler
 import json
 
+from ChannelsArchiveBot.development_config import Config
+
+IMGUR_CLIENT_ID = Config.IMGUR_CLIENT_ID
+IMAGE_FLAG = Config.IMAGE_FLAG
+
 CHANNEL_USERNAME = Config.CHANNEL_USERNAME
+CHANNEL_ID = Config.CHANNEL_ID
 
 API_ID = Config.API_ID
 API_HASH = Config.API_HASH
@@ -12,6 +18,7 @@ BOT_TOKEN = Config.BOT_TOKEN
 
 LANGUAGES: dict[str, str] = json.load(open(Config.LANGUAGE_FILENAME))
 
+scheduler = BackgroundScheduler()
 bot = Client(name="ChannelsArchiveBot", api_id=API_ID,
              api_hash=API_HASH, bot_token=BOT_TOKEN)
 

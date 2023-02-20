@@ -68,9 +68,12 @@ class Channel(Base):
     languages: Mapped[list[str]] = mapped_column(
         "languages", ARRAY(String))
     photo: Mapped[str] = mapped_column("photo", String, nullable=True)
+    image: Mapped[str] = mapped_column("image", String, nullable=True, default=None)
     category: Mapped[str] = mapped_column(
         "category", String)
     members: Mapped[int] = mapped_column("members", Integer)
+    added_on: Mapped[datetime] = mapped_column(
+        "added_on", DateTime, default=datetime.now())
     last_message: Mapped[datetime] = mapped_column(
         "last_message", DateTime, default=datetime.now())
 

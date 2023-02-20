@@ -25,6 +25,8 @@ def db_session(func):
     return wrapper_decorator
 
 
+# ---- User ---
+
 def get_user(telegram_user: types.User, session: Session) -> models.User:
     return session.query(models.User).filter(models.User.id == str(telegram_user.id)).first()
 
@@ -44,7 +46,11 @@ def create_user(telegram_user: types.User, session: Session) -> models.User:
     return new_user
 
 
-def get_channel(telegram_channel: types.Chat, session: Session) -> models.Channel:
+# ---- Channel ----
+
+def get_channel(telegram_channel: types.Chat | str | int, session: Session) -> models.Channel:
+    if not isinstance(telegram_channel, types.Chat):
+        return session.query(models.Channel).filter(models.Channel.id == str(telegram_channel)).first()
     return session.query(models.Channel).filter(models.Channel.id == str(telegram_channel.id)).first()
 
 
@@ -56,7 +62,7 @@ def create_channel(telegram_channel: types.Chat, descritpion: str, tags: list[st
         description=descritpion,
         tags=tags,
         languages=languages,
-        photo=telegram_channel.photo.big_file_id if telegram_channel.photo else None,
+        photo=telegram_channel.photo.small_file_id if telegram_channel.photo else None,
         category=category,
         members=telegram_channel.members_count,
         owner_id=telegram_user.id
@@ -66,3 +72,34 @@ def create_channel(telegram_channel: types.Chat, descritpion: str, tags: list[st
     session.commit()
     session.refresh(new_channel)
     return new_channel
+
+def get_not_pubilshed_channels(session: Session, n: int = 3) -> list[models.Channel]:
+    return session.query(models.Channel).filter(models.Channel.message == None).order_by(models.Channel.added_on).all()[:n]
+
+# ---- Rating ----
+
+def get_ratings_by_channel(channel: models.Channel | str | int, session: Session) -> list[models.Rating] | None:
+    if not isinstance(channel, models.Channel):
+        channel = get_channel(telegram_channel=channel, session=session)
+    
+    return session.query(models.Rating).filter(models.Rating.channel_id == channel.id).all()
+
+
+# ---- Message ----
+
+def create_message(message_id: int, channel_id: str, session: Session) -> models.Message:
+    new_message = models.Message(
+        id=message_id,
+        channel_id=channel_id
+    )
+
+    session.add(new_message)
+    session.commit()
+    session.refresh(new_message)
+    return new_message
+
+def get_message_by_channel(channel: models.Channel | str | int, session: Session) -> models.Message | None:
+    if not isinstance(channel, models.Channel):
+        channel = get_channel(telegram_channel=channel, session=session)
+    
+    return session.query(models.Message).filter(models.Message.channel == channel).first()
