@@ -10,6 +10,11 @@ class Button(object):
         callback_data=CallbackData.HOME
     )
 
+    GO_BACK_SEARCH = InlineKeyboardButton(
+        text="🔙 Go Back",
+        callback_data=CallbackData.SEARCH
+    )
+
     CANCEL = InlineKeyboardButton(
         text="🔙 Cancel",
         callback_data=CallbackData.HOME
@@ -23,6 +28,26 @@ class Button(object):
     RECCOMEND_CHANNEL = InlineKeyboardButton(
         text="🗃 Reccomend Channel",
         callback_data=CallbackData.RECCOMEND_CHANNEL
+    )
+
+    QUERY_SEARCH = InlineKeyboardButton(
+        text="🔎 Search by query",
+        callback_data=CallbackData.QUERY_SEARCH
+    )
+
+    CATEGORY_SEARCH = InlineKeyboardButton(
+        text="📁 Categories",
+        callback_data=CallbackData.CATEGORY_CHANNEL
+    )
+
+    NEXT_PAGE = InlineKeyboardButton(
+        text="➡️",
+        callback_data=CallbackData.NEXT_PAGE
+    )
+
+    PREVIOUS_PAGE = InlineKeyboardButton(
+        text="⬅️",
+        callback_data=CallbackData.PREVIOUS_PAGE
     )
 
 
@@ -40,6 +65,13 @@ class Keyboard(object):
             [Button.GO_BACK]
         ]
     )
+    
+    GO_BACK_SEARCH = InlineKeyboardMarkup(
+        [
+            [Button.GO_BACK_SEARCH]
+        ]
+    )
+
     CANCEL = InlineKeyboardMarkup(
         [
             [Button.CANCEL]
@@ -56,3 +88,11 @@ class Keyboard(object):
             )
         ] for i in range(0, len(Category)-1, 2)
     ])
+
+    SEARCH_OPTIONS = InlineKeyboardMarkup([
+        [Button.QUERY_SEARCH],
+        [Button.CATEGORY_SEARCH],
+        [Button.GO_BACK]
+    ])
+
+    

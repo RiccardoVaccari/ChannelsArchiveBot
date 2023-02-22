@@ -10,7 +10,7 @@ from ChannelsArchiveBot.objects.utils import Utils
 
 @bot.on_callback_query(filters.regex(pattern=callback_data.CallbackData.RECCOMEND_CHANNEL))
 @utils.db_session
-def process_reccomend_channel_query(client: Client, callback_query: types.CallbackQuery, session: Session):
+def process_reccomend_channel_query(client: Client, callback_query: types.CallbackQuery, session: Session) -> None:
     u = utils.get_user(telegram_user=callback_query.from_user, session=session)
 
     u.state = state.State.RECCOMEND_CHANNEL
@@ -21,7 +21,7 @@ def process_reccomend_channel_query(client: Client, callback_query: types.Callba
 
 @bot.on_callback_query(filters.regex(pattern=f"^{callback_data.CallbackData.CATEGORY_CHANNEL}-(.+)$"))
 @utils.db_session
-def process_reccomend_channel_query(client: Client, callback_query: types.CallbackQuery, session: Session):
+def process_reccomend_channel_query(client: Client, callback_query: types.CallbackQuery, session: Session) -> None:
     _, category = callback_query.data.split("-")
     u = utils.get_user(telegram_user=callback_query.from_user, session=session)
     u.data["channel_category"] = category

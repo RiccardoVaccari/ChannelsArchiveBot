@@ -1,4 +1,4 @@
-from ChannelsArchiveBot import BOT_USERNAME, CHANNEL_USERNAME
+from ChannelsArchiveBot import BOT_USERNAME, CHANNEL_USERNAME, IMAGE_FLAG
 
 
 class Text:
@@ -79,8 +79,8 @@ class Info(Text):
     # ---- Publish Channel ----
 
     PUBLISH_CHANNEL = (
-        # "<a href=\"{image}\">📣</a> <b>New Channel</b>\n"
-        "📣 <b>New Channel</b>\n"
+        "<a href=\"{image}\">📣</a> <b>New Channel</b>\n"
+        # "📣 <b>New Channel</b>\n"
         "<b>• Name:</b> {name}\n"
         "<b>• Link:</b> <a href=\"{link}\">Click here to join!</a>\n"
         "<b>• Rating:</b> {stars} ({rating}/5 on {votes} votes)\n\n"
@@ -89,6 +89,22 @@ class Info(Text):
         "<b>#️⃣ Tags:</b> {tags}"
     )
 
+    # ---- Search Channel ----
+    SEARCH_CHANNEL = (
+        "<b>🔎 Search Channel</b>\n\n"
+        "In this section you can <b>search</b> a channel in our archive"
+    )
+
+    QUERY_SEARCH_CHANNEL = (
+        "<b>🔎 Search Channel by query</b>\n\n"
+        "Send me keywords to find the channel you're searching"
+    )
+
+    PAGE_SEARCH_CHANNEL = (
+        "🔎 <b>I've found {results} results for <code>{query}</code></b>\n"
+        "{channels}\n"
+        "<b>Page <i>{page_number}</i> of <i>{total_pages}</i></b>"
+    )
 
 class Errors(Text):
 

@@ -4,10 +4,10 @@ from sqlalchemy.orm import Session
 from ChannelsArchiveBot import bot
 from ChannelsArchiveBot.database import utils
 from ChannelsArchiveBot.objects.state import State
-from ChannelsArchiveBot.updates.messages import channel
+from ChannelsArchiveBot.updates.messages import channel, search
 
 
-@bot.on_message(filters.private)
+@bot.on_message(filters.private & filters.text)
 @utils.db_session
 def process_message(client: Client, message: types.Message, session: Session) -> None:
 
@@ -17,7 +17,9 @@ def process_message(client: Client, message: types.Message, session: Session) ->
         State.RECCOMEND_CHANNEL: channel.process_reccomend_channel_message,
         State.DESCRIPTION_CHANNEL: channel.process_description_channel_message,
         State.TAGS_CHANNEL: channel.process_tags_channel_message,
-        State.LANGUAGE_CHANNEL: channel.process_language_channel_message
+        State.LANGUAGE_CHANNEL: channel.process_language_channel_message,
+
+        State.SEARCH_QUERY: search.process_query_search_message,
     }
 
     if u.state in paths:

@@ -1,5 +1,6 @@
 from pyrogram import types
-from sqlalchemy.orm import Session
+from sqlalchemy import and_
+from sqlalchemy.orm import Session, attributes
 import functools
 
 from ChannelsArchiveBot.database import models
@@ -76,15 +77,31 @@ def create_channel(telegram_channel: types.Chat, descritpion: str, tags: list[st
 def get_not_pubilshed_channels(session: Session, n: int = 3) -> list[models.Channel]:
     return session.query(models.Channel).filter(models.Channel.message == None).order_by(models.Channel.added_on).all()[:n]
 
+def get_channels_by_query(query: str, session: Session, attribute: attributes.InstrumentedAttribute = models.Channel.name) -> list[models.Channel]:
+    return session.query(models.Channel).filter(models.Channel.message != None).filter(attribute.ilike(f"%{query}%")).order_by(models.Channel.average_rating).all()
+
 # ---- Rating ----
 
-def get_ratings_by_channel(channel: models.Channel | str | int, session: Session) -> list[models.Rating] | None:
-    if not isinstance(channel, models.Channel):
-        channel = get_channel(telegram_channel=channel, session=session)
-    
-    return session.query(models.Rating).filter(models.Rating.channel_id == channel.id).all()
+def create_rating(user: models.User | int | str, channel: models.Channel | int | str, rate: int, session: Session) -> models.Rating:
+    user_id = str(user) if not isinstance(user, models.User) else user.id
+    channel_id = str(channel) if not isinstance(channel, models.Channel) else channel.id
 
+    new_rating = models.Rating(
+        user_id=user_id,
+        channel_id=channel_id,
+        rate=int(rate),
+    )
 
+    session.add(new_rating)
+    session.commit()
+    session.refresh(new_rating)
+    return new_rating
+
+def get_rating(user: models.User | int | str, channel: models.Channel | int | str, session: Session) -> models.Rating:
+    user_id = str(user) if not isinstance(user, models.User) else user.id
+    channel_id = str(channel) if not isinstance(channel, models.Channel) else channel.id
+
+    return session.query(models.Rating).filter(and_(models.Rating.user_id == user_id, models.Rating.channel_id == channel_id)).first()
 # ---- Message ----
 
 def create_message(message_id: int, channel_id: str, session: Session) -> models.Message:

@@ -1,2 +1,3 @@
-@REM TITLE Channels Archive Bot
+cls
+TITLE Channels Archive Bot
 venv\Scripts\activate && python -m ChannelsArchiveBot
