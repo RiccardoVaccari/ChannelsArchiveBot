@@ -9,6 +9,9 @@ class CallbackData(StrEnum):
 
     SEARCH = auto()
     QUERY_SEARCH = auto()
+    CATEGORY_SEARCH = auto()
+    CATEGORY_SEARCH_SELECTION = auto()
 
     NEXT_PAGE = auto()
     PREVIOUS_PAGE = auto()
+

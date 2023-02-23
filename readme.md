@@ -14,15 +14,16 @@
     5. Salvo i messaggi nella tabella `messages`
 - [x] Recensione canale:
     al click del pulsante (con stella), viene creato un nuovo record con il voto dell'utente, oppure aggiornato il record se l'utente aveva già votato. NON viene aggiornato immediatamente il messaggio del canale ??
-- [ ] Cerca:
+- [x] Cerca:
     - [x] Search by query:
         la ricerca avviene nella colonna `name` e `description` 
         1. ottenere risultato con colonna `name` e `description`, sommarli e convertire in set()
         2. ordinare in base al rating
         3. creare keyboard con index della lista
         4. inviare un messaggio unico con 3 canali
-    - [ ] Search by category:
-        ...
+    - [x] Search by category:
+        1. Messaggio con scelta categorie
+        2. Messaggio con conali di quella categoria
 
 
 ## States:

@@ -1,5 +1,6 @@
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
+from ChannelsArchiveBot import CHANNELS_PER_PAGE
 from ChannelsArchiveBot.objects.callback_data import CallbackData
 from ChannelsArchiveBot.objects.category import Category
 
@@ -37,7 +38,7 @@ class Button(object):
 
     CATEGORY_SEARCH = InlineKeyboardButton(
         text="📁 Categories",
-        callback_data=CallbackData.CATEGORY_CHANNEL
+        callback_data=CallbackData.CATEGORY_SEARCH
     )
 
     NEXT_PAGE = InlineKeyboardButton(
@@ -94,5 +95,34 @@ class Keyboard(object):
         [Button.CATEGORY_SEARCH],
         [Button.GO_BACK]
     ])
+
+    SEARCH_CATEGORIES = InlineKeyboardMarkup([
+        [
+            InlineKeyboardButton(
+                text=list(Category)[i],
+                callback_data=f"{CallbackData.CATEGORY_SEARCH_SELECTION}-{list(Category)[i]}"
+            ), InlineKeyboardButton(
+                text=list(Category)[i+1],
+                callback_data=f"{CallbackData.CATEGORY_SEARCH_SELECTION}-{list(Category)[i+1]}"
+            )
+        ] for i in range(0, len(Category)-1, 2)
+    ] + [
+        [Button.GO_BACK_SEARCH]
+    ])
+
+    @classmethod
+    def PAGES_CONTROL(cls, index:int, channels: list[str]) -> InlineKeyboardMarkup:
+        rows = list()
+        if index > 0:
+            rows.append([Button.PREVIOUS_PAGE])
+        if (index+CHANNELS_PER_PAGE) < len(channels):
+            try:
+                rows[0].append(Button.NEXT_PAGE)
+            except IndexError:
+                rows.append([Button.NEXT_PAGE])
+
+        rows.append([Button.GO_BACK_SEARCH])
+
+        return InlineKeyboardMarkup(rows)
 
     

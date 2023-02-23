@@ -10,4 +10,6 @@ class State(StrEnum):
     LANGUAGE_CHANNEL = auto()
 
     SEARCH_QUERY = auto()
+    SEARCH_QUERY_RESULT = auto()
+    CATEGORY_SEARCH = auto()
 

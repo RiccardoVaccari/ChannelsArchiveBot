@@ -17,3 +17,5 @@ class Config(object):
     IMGUR_CLIENT_ID = ""
     
     IMAGE_FLAG = False
+    CHANNELS_PER_PAGE = 3
+    SHORT_DESCRIPTION_LEN = 30

@@ -95,15 +95,43 @@ class Info(Text):
         "In this section you can <b>search</b> a channel in our archive"
     )
 
+    # ---- Search Query Channel ----
     QUERY_SEARCH_CHANNEL = (
         "<b>🔎 Search Channel by query</b>\n\n"
         "Send me keywords to find the channel you're searching"
     )
 
-    PAGE_SEARCH_CHANNEL = (
+    PAGE_CHANNELS = (
+         "\n📣<a href=\"{link}\">{name}</a>\n"
+        "Descripion: {description}\n"
+        "Languages: {languages}\n"
+        "<a href=\"{message}\">More info</a>\n"
+    )
+
+    QUERY_PAGE_SEARCH_CHANNEL = (
         "🔎 <b>I've found {results} results for <code>{query}</code></b>\n"
         "{channels}\n"
         "<b>Page <i>{page_number}</i> of <i>{total_pages}</i></b>"
+    )
+
+    ZERO_PAGE_SEARCH_QUERY = (
+        "<b>I've found 0 channels with query: <code>{query}</code></b>"
+    )
+
+    # ---- Search Category Channel ----
+    CATEGORY_SEARCH_SELECTION = (
+        "<b>📁 Search Channel by category</b>\n\n"
+        "Select one category to find channels related to it"
+    )
+
+    CATEGORY_PAGE_SEARCH_CHANNEL = (
+        "<b>{category}: {results} results found</b>\n"
+        "{channels}\n"
+        "<b>Page <i>{page_number}</i> of <i>{total_pages}</i></b>"
+    )
+
+    ZERO_PAGE_SEARCH_CATEGORY = (
+        "<b>I've found 0 channels in category: {category}</b>"
     )
 
 class Errors(Text):
